@@ -19,6 +19,7 @@ class BotPhrases(ConfigModel):
     games_list_button_text: str = Field("Список игр")
     game_message_text_fmt: str = Field(
         "{game.name}\n\nОписание: {game.description}\n\nНачинается: {starts_at}\n\nУчастники: {members}"
+    game_created_message_error_text: str = Field("Невозможно создать игру ранее сегодняшней даты")
     )
     join_game_button_text: str = Field("Участвовать")
     already_joined_game_message_text: str = Field("Вы уже участвуете в этой игре")
