@@ -13,6 +13,7 @@ from . import router
 class CreateGameForm(Form):
     name: str = FormField(enter_message_text=bot.phrases.enter_game_name)
     description: str = FormField(enter_message_text=bot.phrases.enter_game_description)
+    location: str = FormField(enter_message_text=bot.phrases.enter_game_location)
     starts_at: datetime.datetime = FormField(
         enter_message_text=bot.phrases.enter_game_datetime
     )
@@ -25,7 +26,7 @@ async def create_game_form_submit(form: CreateGameForm, bot_user: BotUser):
         # Запись не разрешена.
         await bot.send_message(
             bot_user.id,
-            "Нельзя создавать игры в прошлом!",
+            bot.phrases.game_created_message_error_text,
         )
         return
 

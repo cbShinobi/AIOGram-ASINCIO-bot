@@ -18,6 +18,7 @@ class BotUser(Model):
 class Game(Model):
     id = fields.IntField(pk=True, unique=True)
     name = fields.TextField()
+    location = fields.TextField()
     description = fields.TextField()
     starts_at = fields.DatetimeField()
     created_by: fields.ForeignKeyRelation[BotUser] = fields.ForeignKeyField(

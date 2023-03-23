@@ -15,6 +15,7 @@ class BotPhrases(ConfigModel):
     enter_game_name: str = Field("Введите название игры")
     enter_game_description: str = Field("Введите описание игры")
     enter_game_datetime: str = Field("Введите дату игры в формате ДД.ММ.ГГ чч:мм")
+    enter_game_location: str = Field("Введите место проведения игры")
     game_created_message_text: str = Field("Игра создана")
     games_list_button_text: str = Field("Список игр")
     game_message_text_fmt: str = Field(
