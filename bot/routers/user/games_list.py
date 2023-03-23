@@ -15,7 +15,7 @@ async def send_game(bot_user: BotUser, game: Game):
     await bot.send_message(
         bot_user.id,
         bot.phrases.game_message_text_fmt.format(
-            game=game, members=members_fmt, starts_at=starts_at_fmt
+            game=game, location=game.location, members=members_fmt, starts_at=starts_at_fmt
         ),
         reply_markup=markups.create_join_game_markup(game),
     )
