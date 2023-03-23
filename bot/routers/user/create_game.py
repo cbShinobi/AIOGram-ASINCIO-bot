@@ -16,6 +16,7 @@ class CreateGameForm(Form):
     )
     name: str = FormField(enter_message_text=bot.phrases.enter_game_name)
     description: str = FormField(enter_message_text=bot.phrases.enter_game_description)
+    seats: int = FormField(enter_message_text=bot.phrases.enter_game_seats)
     location: str = FormField(enter_message_text=bot.phrases.enter_game_location)
 
 
@@ -37,7 +38,14 @@ async def create_game_form_submit(form: CreateGameForm, bot_user: BotUser, state
     await GameMember.create(game=game, bot_user=bot_user)
     await bot.send_message(
         bot_user.id,
-        bot.phrases.game_created_message_text,
+
+        bot.phrases.game_created_message_text.format(
+            name=game.name,
+            starts_at=game.starts_at.strftime('%d.%m.%Y %H:%M'),
+            description=game.description,
+            seats=game.seats,
+            location=game.location
+        ),
         reply_markup=markups.start_markup,
     )
 

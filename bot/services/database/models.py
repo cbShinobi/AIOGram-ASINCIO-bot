@@ -20,6 +20,7 @@ class Game(Model):
     name = fields.TextField()
     location = fields.TextField()
     description = fields.TextField()
+    seats = fields.IntField()
     starts_at = fields.DatetimeField()
     created_by: fields.ForeignKeyRelation[BotUser] = fields.ForeignKeyField(
         "models.BotUser", related_name="games"
