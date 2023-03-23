@@ -19,6 +19,7 @@ class BotPhrases(ConfigModel):
     enter_game_location: str = Field("Введите место проведения игры")
     game_created_message_text: str = Field("Игра создана")
     games_list_button_text: str = Field("Список игр")
+    mygames_list_button_text: str = Field("Мои игры")
     game_message_text_fmt: str = Field(
         "{game.name}\n\nОписание: {game.description}\n\nМесто проведения: {game.location}\n\nНачинается: {starts_at}\n\nУчастники: {members}")
     invalid_datetime_error: str = Field("Невозможно создать игру ранее сегодняшней даты")

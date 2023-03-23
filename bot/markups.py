@@ -12,6 +12,7 @@ start_markup = (
     ReplyKeyboardBuilder()
     .button(text=bot.phrases.create_game_button_text)
     .button(text=bot.phrases.games_list_button_text)
+    .button(text=bot.phrases.mygames_list_button_text)
     .adjust(2, repeat=True)
     .as_markup(resize_keyboard=True)
 )
