@@ -26,7 +26,7 @@ async def create_game_form_submit(form: CreateGameForm, bot_user: BotUser):
             # Введенное значение времени меньше или равно текущему времени.
             # Запись не разрешена.
             raise ValueError(game_created_message_error_text)
-            game = await Game.create(created_by=bot_user, **form.__dict__)
+        game = await Game.create(created_by=bot_user, **form.__dict__)
         await GameMember.create(game=game, bot_user=bot_user)
         await bot.send_message(
             bot_user.id,
@@ -34,11 +34,11 @@ async def create_game_form_submit(form: CreateGameForm, bot_user: BotUser):
             reply_markup=markups.start_markup,
         )
     except ValueError:
-    # Invalid time input, ask the user to enter the time again
-    await bot.send_message(
-        bot_user.id,
-        bot.phrases.enter_game_datetime,
-        reply_markup=types.ReplyKeyboardRemove(),
+        # Invalid time input, ask the user to enter the time again
+        await bot.send_message(
+            bot_user.id,
+            bot.phrases.enter_game_datetime,
+            reply_markup=types.ReplyKeyboardRemove(),
         )
 
 @router.message(F.text == bot.phrases.create_game_button_text)
