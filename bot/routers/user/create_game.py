@@ -1,5 +1,4 @@
 ﻿import datetime
-
 from aiogram import F, types
 from aiogram.fsm.context import FSMContext
 
@@ -21,11 +20,11 @@ class CreateGameForm(Form):
 
 @CreateGameForm.submit()
 async def create_game_form_submit(form: CreateGameForm, bot_user: BotUser):
-     try:
+    try:
         if form.starts_at <= datetime.datetime.now():
             # Введенное значение времени меньше или равно текущему времени.
             # Запись не разрешена.
-            raise ValueError(game_created_message_error_text)
+            raise ValueError(bot.phrases.game_created_message_error_text)
         game = await Game.create(created_by=bot_user, **form.__dict__)
         await GameMember.create(game=game, bot_user=bot_user)
         await bot.send_message(
