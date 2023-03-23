@@ -1,4 +1,5 @@
-﻿import datetime
+﻿﻿import datetime
+
 from aiogram import F, types
 from aiogram.fsm.context import FSMContext
 
@@ -12,39 +13,24 @@ from . import router
 class CreateGameForm(Form):
     name: str = FormField(enter_message_text=bot.phrases.enter_game_name)
     description: str = FormField(enter_message_text=bot.phrases.enter_game_description)
-    # location: str = FormField(enter_message_text=bot.phrases.enter_game_location)
-    _starts_at: str = FormField(enter_message_text=bot.phrases.enter_game_datetime)
-
-    @property
-    def starts_at(self) -> datetime.datetime:
-        return datetime.datetime.strptime(self._starts_at, '%Y-%m-%d %H:%M:%S')
-
-    @starts_at.setter
-    def starts_at(self, value: datetime.datetime):
-        self._starts_at = value.strftime('%Y-%m-%d %H:%M:%S')
+    starts_at: datetime.datetime = FormField(
+        enter_message_text=bot.phrases.enter_game_datetime
+    )
 
 
 @CreateGameForm.submit()
 async def create_game_form_submit(form: CreateGameForm, bot_user: BotUser):
     try:
-        if form.starts_at <= datetime.datetime.now():
-            # Введенное значение времени меньше или равно текущему времени.
-            # Запись не разрешена.
-            raise ValueError(bot.phrases.game_created_message_error_text)
         game = await Game.create(created_by=bot_user, **form.__dict__)
-        await GameMember.create(game=game, bot_user=bot_user)
-        await bot.send_message(
-            bot_user.id,
-            bot.phrases.game_created_message_text,
-            reply_markup=markups.start_markup,
-        )
     except ValueError:
-        # Invalid time input, ask the user to enter the time again
-        await bot.send_message(
-            bot_user.id,
-            bot.phrases.enter_game_datetime,
-            reply_markup=types.ReplyKeyboardRemove(),
-        )
+        await bot.send_message(bot_user.id, bot.phrases.invalid_datetime_error)
+        return
+    await GameMember.create(game=game, bot_user=bot_user)
+    await bot.send_message(
+        bot_user.id,
+        bot.phrases.game_created_message_text,
+        reply_markup=markups.start_markup,
+    )
 
 
 @router.message(F.text == bot.phrases.create_game_button_text)
