@@ -10,7 +10,7 @@ from . import router
 
 async def send_game(bot_user: BotUser, game: Game):
     starts_at_fmt = datetime.datetime.strftime(game.starts_at, r"%d.%m.%Y, %H:%M")
-    members_fmt = " | ".join(m.bot_user.contacts for m in game.members)
+    members_fmt = "\n".join(m.bot_user.contacts for m in game.members)
 
     await bot.send_message(
         bot_user.id,

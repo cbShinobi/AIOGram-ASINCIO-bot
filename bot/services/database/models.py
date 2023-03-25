@@ -25,6 +25,7 @@ class Game(Model):
     created_by: fields.ForeignKeyRelation[BotUser] = fields.ForeignKeyField(
         "models.BotUser", related_name="games"
     )
+    created_by_username = fields.CharField(max_length=255)
     members: fields.ReverseRelation["GameMember"]
 
 
